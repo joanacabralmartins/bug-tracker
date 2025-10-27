@@ -10,8 +10,8 @@ pipeline {
                 }
             }
             environment {
-                GOCACHE = "/tmp/go-cache"
-                GOMODCACHE = "/go-mod"
+                GOCACHE = "/go/cache"
+                GOMODCACHE = "/go/mod"
             }
             steps {
                 dir('bugtracker-backend') {
