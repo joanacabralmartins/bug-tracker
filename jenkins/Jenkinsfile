@@ -11,10 +11,13 @@ pipeline {
             }
             environment {
                 GOCACHE = "/tmp/go-cache"
+                GOMODCACHE = "/go-mod"
             }
             steps {
                 dir('bugtracker-backend') {
                     sh 'mkdir -p $GOCACHE'
+                    sh 'chmod -R 777 $GOCACHE $GOMODCACHE'
+                    sh 'go mod download'
                     sh 'go test -v ./...'
                 }
             }
