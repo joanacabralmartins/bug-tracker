@@ -22,8 +22,8 @@ pipeline {
                         go test -v ./... 2>&1 | go-junit-report > test-results.xml
 
                         # Generate coverage report
-                        go test -coverprofile=coverage.out -convermode=atomic ./...
-                        go tool cover -html=coverage.out -o coverage.html
+                        go test -coverprofile=coverage -covermode=atomic ./...
+                        go tool cover -html=coverage -o coverage.html
 
                         mkdir -p reports
                         mv coverage.html reports/
