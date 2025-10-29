@@ -20,12 +20,24 @@ pipeline {
                         chmod -R 777 $GOCACHE $GOMODCACHE
                         go mod download
                         go test -v ./... 2>&1 | go-junit-report > test-results.xml
+
+                        # Generate coverage report
+                        go test -coverprofile=coverage.out -convermode=atomic ./...
+                        go tool cover -html=coverage.out -o coverage.html
+
+                        mkdir -p reports
+                        mv coverage.html reports/
                     '''
                 }
             }
             post {
                 always {
                     junit 'bugtracker-backend/test-results.xml'
+                    publishHTML target: {
+                        reportDir: 'bugtracker-backend/reports',
+                        reportFiles: 'coverage.html',
+                        reportName: 'Backend Coverage Report'
+                    }
                 }
             }
         }
